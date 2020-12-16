@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template-usuarios.xhtml">
+
+	<ui:define name="titulo">
+    #{msgs.tituloPublicacionesMis}
+    </ui:define>
+
+	<ui:define name="cuerpo">
+		<h:form>
+			<p:dataTable var="vapubli" value="#{controllerPublicacion.auxiliar}"
+				style="margin-bottom:40px">
+
+				<p:column headerText="#{msgs.tablaTitulo}" sortBy="#{vapubli.titulo}">
+					<h:outputText value="#{vapubli.titulo}" />
+				</p:column>
+
+				<p:column headerText="#{msgs.tablaTexto}">
+					<h:outputText value="#{vapubli.texto}" />
+				</p:column>
+
+				<p:column headerText="#{msgs.tablaFecha}" sortBy="#{vapubli.fecha_legible}">
+					<h:outputText value="#{vapubli.fecha_legible}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="pie">
+		<ui:include src="/snippets/salirSesion.xhtml" />
+	</ui:define>
+</ui:composition>

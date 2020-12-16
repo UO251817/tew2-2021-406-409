@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/template-usuarios.xhtml">
+
+	<ui:define name="titulo">
+    #{msgs.tituloOperacionPubli}
+  </ui:define>
+	<ui:define name="cuerpo">
+		<center>
+		<h:form>
+				<p:panelGrid columns="2" cellpadding="5">
+					#{msgs.tablaTitulo}
+					<h:panelGroup>
+						<p:inputText value="#{controllerPublicacion.publicacion.titulo}" required="true"
+							requiredMessage="#{msgs.formTitulo_publi_requiredMessage}"
+							id="titulo">
+						</p:inputText>
+						<p:message for="titulo" />
+					</h:panelGroup>
+					
+					#{msgs.tablaTexto}
+					<h:panelGroup>
+						<p:inputText value="#{controllerPublicacion.publicacion.texto}" required="true"
+							requiredMessage="#{msgs.formTexto_publi_requiredMessage}"
+							validatorMessage="#{msgs.formTexto_publi_validatorMessage}"
+							id="texto">
+							<f:validateLength maximum="20" />
+						</p:inputText>
+						<p:message for="texto" />
+					</h:panelGroup>
+				</p:panelGrid>
+				
+				
+				<p:commandLink action="#{controllerPublicacion.salva}" process="@form"
+					value="#{msgs.guardar}">
+				</p:commandLink>
+		</h:form>
+		</center>
+	</ui:define>
+	
+	<ui:define name="pie">
+		<ui:include src="/snippets/salirSesion.xhtml" />
+	</ui:define>
+</ui:composition>

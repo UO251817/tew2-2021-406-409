@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16041465051400" configfile="/tew1-2021-406-409/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="404" y="240" id="pf16041721081810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16041721081811 pf16041721081812 pf16043164927902 pf16044109258890 pf16044109258891 pf16044109258892 pf16044109258893 pf16044109258894 pf160441218416516 pf160441822400519 pf16044367737060" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/error.xhtml" y="24" id="pf16041721081816" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf16041721081811" path="/restricted/error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="660" y="456" id="pf16041721081817" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf160425055739810 pf160425111163814 pf16043179879807 pf16043186778439" inlinks="pf16041721081812 pf160425055739812 pf160425055739810 pf16043164927902 pf160433614862922 pf16044367737060" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AltaUsuario.xhtml" x="756" y="288" id="pf160425055739913" referenceLink="//@navigationRule.9/@navigationCase.3/@toViewId|" outlinks="pf160425055739812 pf160425746426020 pf16043124866611 pf16043179879808" inlinks="pf160425111163814 pf160425746426020 pf16043124866611" path="/AltaUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/opciones_usuario.xhtml" x="420" y="24" id="pf16043178420925" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" outlinks="pf160434262516834 pf16044109258905" inlinks="pf16043179879808 pf16043179879807" path="/restricted/opciones_usuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/opciones_admin.xhtml" x="360" y="468" id="pf160431867784310" referenceLink="//@navigationRule.9/@navigationCase.1/@toViewId|" outlinks="pf160432010175716 pf160433614862922" inlinks="pf16043186778439" path="/restricted/opciones_admin.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/listado_admin_usu.xhtml" x="84" y="516" id="pf160431986567414" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" outlinks="pf160432010175717 pf16044383135072" inlinks="pf160432010175716 pf160432010175717 pf16044109258892 pf16044383135072" path="/restricted/listado_admin_usu.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/misPublicaciones.xhtml" x="660" y="24" id="pf160434262516835" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" inlinks="pf160434262516834 pf16044109258890 pf160441099717514" path="/restricted/misPublicaciones.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/invitaciones.xhtml" x="184" y="24" id="pf16044109258908" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" outlinks="pf16044109258909" inlinks="pf16044109258891 pf16044109258905 pf16044109258909" path="/restricted/invitaciones.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/nueva_publicacion.xhtml" x="744" y="144" id="pf160441092589011" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf160441099717514" inlinks="pf16044109258893" path="/restricted/nueva_publicacion.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/add_friends.xhtml" x="57" y="264" id="pf160441092589012" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf160442152515524 pf16044367737061" inlinks="pf16044109258894 pf160441822400519 pf160442152515524 pf16044367737061" path="/restricted/add_friends.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restricted/todasPublicaciones.xhtml" x="37" y="396" id="pf160441218416518" referenceLink="//@navigationRule.2/@fromViewId|" inlinks="pf160441218416516" path="/restricted/todasPublicaciones.xhtml"/>
+  <links id="pf16041721081811" target="pf16041721081816" source="pf16041721081810" outcome="error"/>
+  <links id="pf16041721081812" target="pf16041721081817" source="pf16041721081810" outcome="login"/>
+  <links id="pf160425055739812" target="pf16041721081817" source="pf160425055739913" outcome="login"/>
+  <links id="pf160425111163814" target="pf160425055739913" source="pf16041721081817" outcome="registrar"/>
+  <links id="pf16043164927902" target="pf16041721081817" source="pf16041721081810" outcome="exito" fromaction="#{login.logout(usuario.email)}"/>
+  <links id="pf16043179879808" target="pf16043178420925" source="pf160425055739913" outcome="exito" fromaction="#{controllerUsuario.salva}"/>
+  <links id="pf16043179879807" target="pf16043178420925" source="pf16041721081817" outcome="successUsuario" fromaction="#{login.verify}"/>
+  <links id="pf16043186778439" target="pf160431867784310" source="pf16041721081817" outcome="successAdmin" fromaction="#{login.verify}"/>
+  <links id="pf160432010175716" target="pf160431986567414" source="pf160431867784310" outcome="exito" fromaction="#{controllerUsuario.listado}"/>
+  <links id="pf160433614862922" target="pf16041721081817" source="pf160431867784310" outcome="exitoTodosFuera" fromaction="#{controllerUsuario.reset}"/>
+  <links id="pf160434262516834" target="pf160434262516835" source="pf16043178420925" outcome="exito2" fromaction="#{controllerPublicacion.listadoEmail()}"/>
+  <links id="pf16044109258890" target="pf160434262516835" source="pf16041721081810" outcome="exito2" fromaction="#{controllerPublicacion.listadoEmail()}"/>
+  <links id="pf16044109258891" target="pf16044109258908" source="pf16041721081810" outcome="exito3" fromaction="#{controllerAmigo.listadoEmail2()}"/>
+  <links id="pf16044109258892" target="pf160431986567414" source="pf16041721081810" outcome="exito" fromaction="#{controllerUsuario.listado}"/>
+  <links id="pf16044109258893" target="pf160441092589011" source="pf16041721081810" outcome="nuevaPublicacion"/>
+  <links id="pf16044109258905" target="pf16044109258908" source="pf16043178420925" outcome="exito3" fromaction="#{controllerAmigo.listadoEmail2()}"/>
+  <links id="pf16044109258894" target="pf160441092589012" source="pf16041721081810" outcome="exitoBuscar" fromaction="#{controllerAmigo.buscarAmigos()}"/>
+  <links id="pf160441099717514" target="pf160434262516835" source="pf160441092589011" outcome="exito4" fromaction="#{controllerPublicacion.salva}"/>
+  <links id="pf160441218416516" target="pf160441218416518" source="pf16041721081810" outcome="exitoAmis" fromaction="#{controllerPublicacion.listadoAmigos()}"/>
+  <links id="pf160441822400519" target="pf160441092589012" source="pf16041721081810" outcome="exito9" fromaction="#{controllerUsuario.filtrar()}"/>
+  <links id="pf16044367737060" target="pf16041721081817" source="pf16041721081810" outcome="exitoTodosFuera"/>
+  <links id="pf160425055739810" target="pf16041721081817" source="pf16041721081817" outcome="login" fromaction="#{login.verify}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf160425746426020" target="pf160425055739913" source="pf160425055739913" outcome="errorcontra" fromaction="#{controllerUsuario.salva}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf16043124866611" target="pf160425055739913" source="pf160425055739913" outcome="errorExisteUsuario" fromaction="#{controllerUsuario.salva}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf160432010175717" target="pf160431986567414" source="pf160431986567414" outcome="exito" fromaction="#{controllerUsuario.baja(vauser)}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf16044109258909" target="pf16044109258908" source="pf16044109258908" outcome="LCAP" fromaction="#{controllerAmigo.aceptar(vauser3.email_usuario)}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf160442152515524" target="pf160441092589012" source="pf160441092589012" outcome="exito9" fromaction="#{controllerUsuario.filtrar()}">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf16044367737061" target="pf160441092589012" source="pf160441092589012" outcome="exito73" fromaction="#{controllerUsuario.peticion(vauser4)}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+  <links id="pf16044383135072" target="pf160431986567414" source="pf160431986567414" outcome="errorEstaSesion"/>
+</pageflow:Pageflow>

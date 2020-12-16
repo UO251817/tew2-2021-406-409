@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+	</application>
+
+	<managed-bean>
+		<managed-bean-name>controllerUsuario</managed-bean-name>
+		<managed-bean-class>com.tew.presentation.BeanUsuarios</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>controllerPublicacion</managed-bean-name>
+		<managed-bean-class>com.tew.presentation.BeanPublicaciones</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>controllerAmigo</managed-bean-name>
+		<managed-bean-class>com.tew.presentation.BeanAmigos</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>settings</managed-bean-name>
+		<managed-bean-class>com.tew.presentation.BeanSettings</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>login</managed-bean-name>
+		<managed-bean-class>com.tew.presentation.BeanLogin</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+
+	<!-- ///////////////////////// TODAS ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/restricted/error.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{login.logout(usuario.email)}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerPublicacion.listadoEmail()}</from-action>
+			<from-outcome>exito2</from-outcome>
+			<to-view-id>/restricted/misPublicaciones.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerAmigo.listadoEmail2()}</from-action>
+			<from-outcome>exito3</from-outcome>
+			<to-view-id>/restricted/invitaciones.xhtml</to-view-id>
+		</navigation-case>
+			<navigation-case>
+			<from-action>#{controllerUsuario.listado}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listado_admin_usu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>nuevaPublicacion</from-outcome>
+			<to-view-id>/restricted/nueva_publicacion.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerAmigo.buscarAmigos()}</from-action>
+			<from-outcome>exitoBuscar</from-outcome>
+			<to-view-id>/restricted/add_friends.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerPublicacion.listadoAmigos()}</from-action>
+			<from-outcome>exitoAmis</from-outcome>
+			<to-view-id>/restricted/todasPublicaciones.xhtml</to-view-id>
+		</navigation-case>		
+		<navigation-case>
+			<from-action>#{controllerUsuario.filtrar()}</from-action>
+			<from-outcome>exito9</from-outcome>
+			<to-view-id>/restricted/add_friends.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exitoTodosFuera</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	
+	
+	
+	<!-- ///////////////////////// NUEVA PUBLICACION ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/restricted/nueva_publicacion.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerPublicacion.salva}</from-action>
+			<from-outcome>exito4</from-outcome>
+			<to-view-id>/restricted/misPublicaciones.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+<!-- ///////////////////////// ADD Friends ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/restricted/add_friends.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerUsuario.filtrar()}</from-action>
+			<from-outcome>exito9</from-outcome>
+			<to-view-id>/restricted/add_friends.xhtml</to-view-id>
+		</navigation-case>		
+		<navigation-case>
+			<from-action>#{controllerUsuario.peticion(vauser4)}</from-action>
+			<from-outcome>exito73</from-outcome>
+			<to-view-id>/restricted/add_friends.xhtml</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+
+	<!-- ///////////////////////// OPCIONES_USUARIO ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/restricted/opciones_usuario.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerPublicacion.listadoEmail()}</from-action>
+			<from-outcome>exito2</from-outcome>
+			<to-view-id>/restricted/misPublicaciones.xhtml</to-view-id>
+		</navigation-case>
+	
+		<navigation-case>
+			<from-action>#{controllerAmigo.listadoEmail2()}</from-action>
+			<from-outcome>exito3</from-outcome>
+			<to-view-id>/restricted/invitaciones.xhtml</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+
+	<!-- ///////////////////////// OPCIONES_ADMIN ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/restricted/opciones_admin.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerUsuario.listado}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listado_admin_usu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuario.reset}</from-action>
+			<from-outcome>exitoTodosFuera</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+	<!-- ///////////////////////// INVITACIONES///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/restricted/invitaciones.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerAmigo.aceptar(vauser3.email_usuario)}</from-action>
+			<from-outcome>LCAP</from-outcome>
+			<to-view-id>/restricted/invitaciones.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- ///////////////////////// LISTADO_ADMIN_USU ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/restricted/listado_admin_usu.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerUsuario.baja(vauser)}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/listado_admin_usu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>errorEstaSesion</from-outcome>
+			<to-view-id>/restricted/listado_admin_usu.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- ///////////////////////// ALTAUSUARIO ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/AltaUsuario.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuario.salva}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/opciones_usuario.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuario.salva}</from-action>
+			<from-outcome>errorcontra</from-outcome>
+			<to-view-id>/AltaUsuario.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuario.salva}</from-action>
+			<from-outcome>errorExisteUsuario</from-outcome>
+			<to-view-id>/AltaUsuario.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- ///////////////////////// INDEX ///////////////////////////////// -->
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{login.verify}</from-action>
+			<from-outcome>successUsuario</from-outcome>
+			<to-view-id>/restricted/opciones_usuario.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{login.verify}</from-action>
+			<from-outcome>successAdmin</from-outcome>
+			<to-view-id>/restricted/opciones_admin.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{login.verify}</from-action>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>registrar</from-outcome>
+			<to-view-id>/AltaUsuario.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

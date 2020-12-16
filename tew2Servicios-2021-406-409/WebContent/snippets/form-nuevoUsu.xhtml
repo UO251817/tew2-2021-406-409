@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:define name="titulo">
+    #{msgs.tituloOperacionAlta}
+    </ui:define>
+    
+    
+	<p:panelGrid columns="2" cellpadding="5">
+  #{msgs.correo} 
+  <h:panelGroup>
+			<p:inputText value="#{usuario.email}" required="true"
+				requiredMessage="#{msgs.formAlta_correo_requiredMessage}"
+				validatorMessage="#{msgs.formAlta_correo_validatorMessage}"
+				id="email">
+				<f:validateRegex pattern=".+@.+\.[a-z]+" />
+			</p:inputText>
+			<p:message for="email" />
+		</h:panelGroup>
+  
+  #{msgs.nombre} 
+  <h:panelGroup>
+			<p:inputText value="#{usuario.nombre}" required="true"
+				requiredMessage="#{msgs.formAlta_nombre_requiredMessage}"
+				validatorMessage="#{msgs.formAlta_nombre_validatorMessage}"
+				id="nombre">
+				<f:validateLength maximum="20" />
+			</p:inputText>
+			<p:message for="nombre" />
+		</h:panelGroup>
+  
+  #{msgs.password}
+  <h:panelGroup>
+			<p:password value="#{usuario.passwd}" required="true"
+				requiredMessage="#{msgs.login_form_password_required}"
+				validatorMessage="#{msgs.login_form_password_validator}"
+				id="password1">
+				<f:validateLength minimum="5" maximum="8" />
+			</p:password>
+			<p:message for="password1" />
+		</h:panelGroup>  
+  
+  #{msgs.repeat_password}
+  <h:panelGroup>
+			<p:password value="#{usuario.passwd2}" required="true"
+				requiredMessage="#{msgs.login_form_password_required}"
+				validatorMessage="#{msgs.login_form_password_validator}"
+				id="password2">
+				<f:validateLength minimum="5" maximum="8" />
+			</p:password>
+			<p:message for="password2" />
+		</h:panelGroup>			    
+	</p:panelGrid>
+	
+</ui:composition>
