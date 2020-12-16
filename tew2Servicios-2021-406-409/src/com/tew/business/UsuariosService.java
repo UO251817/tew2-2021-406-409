@@ -11,7 +11,7 @@ public interface UsuariosService {
 	
 	
 	List<Usuarios> getUsuarios() throws Exception;
-	List<Usuarios> getUsuarios(String filtro, String email);
+	List<Usuarios> getUsuarios(String filtro, String email) throws EntityNotFoundException;
 	void save(Usuarios u) throws EntityAlreadyExistsException;
 	void guardarAmigo(Amigos nuevoAmigo)throws EntityAlreadyExistsException;
 	void delete(String email) throws EntityNotFoundException;

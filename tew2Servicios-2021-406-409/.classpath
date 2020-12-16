@@ -11,11 +11,12 @@
 			<attribute name="owner.project.facets" value="jst.jsf;jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="Librerias/hsqldb.jar"/>
 	<classpathentry kind="lib" path="Librerias/primefaces-5.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-5.3.jar"/>
+	<classpathentry kind="lib" path="S:/repos/tew2Servicios-2021-406-409/WebContent/WEB-INF/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="S:/repos/tew2Servicios-2021-406-409/WebContent/WEB-INF/lib/primefaces-5.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

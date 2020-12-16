@@ -308,4 +308,3 @@ public class PublicacionJdbcDao implements PublicacionDao{
 		}
 	}
 }
-
