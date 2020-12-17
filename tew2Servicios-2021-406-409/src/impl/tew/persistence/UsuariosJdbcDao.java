@@ -1,17 +1,18 @@
 package impl.tew.persistence;
 
 
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.faces.context.FacesContext;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import com.tew.model.Amigos;
 import com.tew.model.Usuarios;
 import com.tew.persistence.UsuariosDao;
@@ -235,6 +236,61 @@ public class UsuariosJdbcDao implements UsuariosDao{
 
 
 	}
+	
+	@Override
+	public void reset() {
+		ejecutaSQL("DELETE FROM AMIGOS");
+		ejecutaSQL("DELETE FROM PUBLICACION");
+		ejecutaSQL("DELETE FROM USUARIOS");
+		
+		
+		JSONParser parser= new JSONParser();
+		try {
+
+			Object obj = parser.parse(new FileReader("/WebContent/redsocial.json"));
+
+			JSONObject jsonObject = (JSONObject) obj;
+
+			//recorrer usuarios
+			JSONArray usus = (JSONArray) jsonObject.get("usuarios");
+			Iterator<?> iusu = usus.iterator();
+			while(iusu.hasNext()) {
+				JSONObject actualusu = (JSONObject) iusu.next();
+				String email = (String) actualusu.get("email");
+				String password = (String) actualusu.get("passwd");
+				String rol = (String) actualusu.get("rol");
+				String nombre = (String) actualusu.get("nombre");
+				ejecutaSQL("INSERT INTO VALUES('" + email + "','" + password + "','" + rol + "','" + nombre +"')");
+			}
+
+			//recorrer publicaciones
+			JSONArray publis = (JSONArray) jsonObject.get("publicaciones");
+			Iterator<?> ipublis = publis.iterator();
+			while(ipublis.hasNext()) {
+				JSONObject actualpubli = (JSONObject) ipublis.next();
+				String email = (String) actualpubli.get("email");
+				String titulo = (String) actualpubli.get("titulo");
+				String texto = (String) actualpubli.get("texto");
+				Long fecha = Long.parseLong((String)actualpubli.get("fecha"));
+				ejecutaSQL("INSERT INTO VALUES('" + email + "','" + titulo + "','" + texto + "'," + fecha +")");
+			}
+
+			//recorrer amigos
+			JSONArray amis = (JSONArray) jsonObject.get("amigos");
+			Iterator<?> iamis = amis.iterator();
+			while(iamis.hasNext()) {
+				JSONObject actualami = (JSONObject) iamis.next();
+				String email_usuario = (String)  actualami.get("emailusuario");
+				String email_amigo = (String) actualami.get("emailamigo");
+				ejecutaSQL("INSERT INTO VALUES('" + email_usuario + "','" + email_amigo + "', '1')");
+				ejecutaSQL("INSERT INTO VALUES('" + email_amigo + "','" + email_usuario + "', '1')");
+			}
+		}catch(Exception e) {
+			System.err.println("Error: " + e.toString());
+		}
+	}
+
+	/*
 	@Override
 	public void reset() {
 
@@ -313,8 +369,7 @@ public class UsuariosJdbcDao implements UsuariosDao{
 		
 		System.out.println("llego fin jdbc");
 	}
-	
-
+*/	
 	private void ejecutaSQL(String linea) {
 
 		PreparedStatement ps = null;

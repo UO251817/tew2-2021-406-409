@@ -50,7 +50,7 @@ public interface UsuariosServicesRs extends UsuariosService {
 	@PUT
 	@Path("{email}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	void guardarAmigo(@PathParam("email") Amigos email) throws EntityAlreadyExistsException;
+	void guardarAmigo(@PathParam("email") Amigos ami) throws EntityAlreadyExistsException;
 	
 	@POST
 	void reinicioBaseDatos();

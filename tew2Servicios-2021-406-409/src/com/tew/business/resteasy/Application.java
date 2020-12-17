@@ -28,5 +28,4 @@ public class Application extends javax.ws.rs.core.Application {
 	public Set<Object> getSingletons() {
 		return Collections.EMPTY_SET;
 	}
-
 }
