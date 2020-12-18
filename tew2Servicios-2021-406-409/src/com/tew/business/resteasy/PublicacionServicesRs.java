@@ -18,7 +18,7 @@ import com.tew.business.exception.EntityNotFoundException;
 import com.tew.model.Publicacion;
 
 
-@Path("/PublicacionServiceRS")
+@Path("/PublicacionServicesRs")
 public interface PublicacionServicesRs extends PublicacionService {
 	
 	@GET
@@ -41,13 +41,12 @@ public interface PublicacionServicesRs extends PublicacionService {
 	Publicacion findById(@PathParam("id") Long id) throws EntityNotFoundException;
 
 	@POST
-	@Path("{p}")
-	void update(@PathParam("p") Publicacion p) throws EntityNotFoundException;
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	void update(Publicacion p) throws EntityNotFoundException;
 	
 	@PUT
-	@Path("{p}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	void save(@PathParam("p") Publicacion p) throws EntityAlreadyExistsException;
+	void save( Publicacion p) throws EntityAlreadyExistsException;
 	
 	@DELETE
 	@Path("{email}")

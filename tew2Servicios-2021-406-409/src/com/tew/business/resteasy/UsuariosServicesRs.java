@@ -17,7 +17,7 @@ import com.tew.model.Amigos;
 import com.tew.model.Usuarios;
 
 
-@Path("/UsuariosServiceRS")
+@Path("/UsuariosServicesRS")
 public interface UsuariosServicesRs extends UsuariosService {
 	
 	@GET
@@ -25,22 +25,20 @@ public interface UsuariosServicesRs extends UsuariosService {
 	public List<Usuarios> getUsuarios();
 	
 	@GET
-	@Path("{filter}")
+	@Path("{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<Usuarios> getUsuarios(@PathParam("filter") String filter, String email) throws EntityNotFoundException;
+	public List<Usuarios> getUsuarios(String filter,@PathParam("email")  String email) throws EntityNotFoundException;
 	
 	@DELETE
 	@Path("{email}")
 	void delete(@PathParam("email") String email) throws EntityNotFoundException;
 	
 	@PUT
-	@Path("{usu}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	void save(@PathParam("usu") Usuarios u) throws EntityAlreadyExistsException;
+	void save(Usuarios u) throws EntityAlreadyExistsException;
 	
 	@POST
-	@Path("{usu}")
-	void update(@PathParam("usu") Usuarios usu) throws EntityNotFoundException;
+	void update(Usuarios usu) throws EntityNotFoundException;
 	
 	@GET
 	@Path("{email}")
@@ -48,9 +46,8 @@ public interface UsuariosServicesRs extends UsuariosService {
 	public Usuarios findByEmail(@PathParam("email") String email) throws EntityNotFoundException;
 	
 	@PUT
-	@Path("{email}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	void guardarAmigo(@PathParam("email") Amigos ami) throws EntityAlreadyExistsException;
+	void guardarAmigo(Amigos ami) throws EntityAlreadyExistsException;
 	
 	@POST
 	void reinicioBaseDatos();

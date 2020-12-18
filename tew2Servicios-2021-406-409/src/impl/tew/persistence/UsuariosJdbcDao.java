@@ -242,7 +242,7 @@ public class UsuariosJdbcDao implements UsuariosDao{
 		ejecutaSQL("DELETE FROM AMIGOS");
 		ejecutaSQL("DELETE FROM PUBLICACION");
 		ejecutaSQL("DELETE FROM USUARIOS");
-		
+		ejecutaSQL("INSERT INTO USUARIOS VALUES('admin@dominio.com', 'admin', 'admin', 'admin')");
 		
 		JSONParser parser= new JSONParser();
 		try {

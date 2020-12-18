@@ -17,7 +17,7 @@ import com.tew.business.exception.EntityNotFoundException;
 import com.tew.model.Amigos;
 
 
-@Path("/AmigosServiceRS")
+@Path("/AmigosServicesRs")
 public interface AmigosServicesRs {
 
 	@GET
@@ -40,14 +40,12 @@ public interface AmigosServicesRs {
 	Amigos findByEmail(@PathParam("email_usuario") String email_usuario) throws EntityNotFoundException;
 
 	@POST
-	@Path("{a}")
-	void update(@PathParam("a") Amigos a) throws EntityNotFoundException;
+	void update(Amigos a) throws EntityNotFoundException;
 	
 
 	@PUT
-	@Path("{a}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	void save(@PathParam("a") Amigos a) throws EntityAlreadyExistsException;
+	void save(Amigos a) throws EntityAlreadyExistsException;
 	
 	@DELETE
 	@Path("{email_amigo}")
