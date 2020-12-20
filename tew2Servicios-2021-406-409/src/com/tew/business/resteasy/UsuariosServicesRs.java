@@ -30,7 +30,7 @@ public interface UsuariosServicesRs extends UsuariosService {
 	@DELETE
 	@Path("{email}")
 	void delete(@PathParam("email") String email) throws EntityNotFoundException;
-	
+	/*
 	@PUT
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	void save(Usuarios u) throws EntityAlreadyExistsException;
@@ -38,6 +38,7 @@ public interface UsuariosServicesRs extends UsuariosService {
 	@POST
 	void update(Usuarios usu) throws EntityNotFoundException;
 	
+	*/
 	@PUT
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	void guardarAmigo(Amigos ami) throws EntityAlreadyExistsException;

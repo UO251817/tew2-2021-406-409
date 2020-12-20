@@ -34,14 +34,9 @@ public class UsuariosServicesRsImpl implements UsuariosServicesRs {
 	}
 
 	@Override
-	public void update(Usuarios usu) throws EntityNotFoundException {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void guardarAmigo(Amigos email) throws EntityAlreadyExistsException {
+	public void guardarAmigo(Amigos ami) throws EntityAlreadyExistsException {
 	
-		new UsuariosOperaciones().guardarAmigo(email);
+		new UsuariosOperaciones().guardarAmigo(ami);
 		
 	}
 

@@ -50,6 +50,14 @@ function Model() {
 	this.filtrar = function(fil){
 		this.tbCandidatosFiltro=UsuariosServicesRs.getUsuarios2({filtro: "'"+fil+"'" ,email: localStorage.getItem('usuario')});
 	}
+	
+	//Guardamos la peticion
+	this.solAmistad = function(solicitud){
+		UsuariosServicesRs.guardarAmigo({
+			$entity: solicitud,
+			$contentType: "application/json"
+		});
+	}
 };
  
 
@@ -121,7 +129,7 @@ function View(){
 				var amigo = lista[i];
 				$("#tablaSolAmi tbody").append("<tr> <td>"
 						+ amigo.email_usuario  
-						+ "<td> <button type='submit' class='btn btn-default AñadirAmigo' id='AñadirAmigo'>Aceptar</button></td>" +"</td></tr>");		
+						+ "<td> <button type='submit' class='btn btn-default AceptarAmigo' id='AceptarAmigo'>Aceptar</button></td>" +"</td></tr>");		
 			}
 		}
 	}
@@ -159,9 +167,17 @@ function View(){
 			var usu = lista[i];
 			if(usu.rol == "usuario"){
 				$("#tablaTodosUsuarios tbody").append("<tr> <td>"
-						+ usu.email +"</td></tr>");
+						+ usu.email  
+						+ "<td> <button type='submit' class='btn btn-default borrarUsuario' id='borrarUsuario'>Borrar</button></td>" 
+						+"</td></tr>");
 			}		
 		}
+	}
+	
+	this.solAmis = function(fila){
+		var d = fila.closest('tr').find('td').get(0).innerHTML;
+		return d;	
+		
 	}
 
 
@@ -199,7 +215,6 @@ function Controller(varmodel, varview) {
 			that.model.add(publicacion);
 			//Listamos publis
 			that.view.listMisPublis(that.model.tbPublicacionesMis);
-			window.location.href = "misPublis.html";		
 		});
 
 
@@ -212,6 +227,19 @@ function Controller(varmodel, varview) {
 				that.model.filtrar(filtro);
 				that.view.añadirAmigos(that.model.tbCandidatosFiltro);
 			}
+		});
+		
+		
+
+		$(".AñadirAmigo").click( function(event) {
+			var email_ami = that.view.solAmis($(this));
+			var solicitud = {
+					
+					email_usuario: localStorage.getItem('usuario'),
+					email_amigo: email_ami
+			}
+			that.model.solAmistad(solicitud);
+			location.reload(true);
 		});
 	}
 

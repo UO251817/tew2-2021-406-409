@@ -68,8 +68,6 @@ public class UsuariosJdbcDao implements UsuariosDao{
 	
 	@Override
 	public List<Usuarios> getUsuarios(String filtro, String email) {
-		System.out.println(filtro);
-		System.out.println(email);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Connection con = null;
@@ -161,7 +159,6 @@ public class UsuariosJdbcDao implements UsuariosDao{
 
 	@Override
 	public void guardarAmigo(Amigos nuevoAmigo) throws AlreadyPersistedException {
-		
 		PreparedStatement ps = null;
 		Connection con = null;
 		int rows = 0;
@@ -174,11 +171,10 @@ public class UsuariosJdbcDao implements UsuariosDao{
 			// Obtenemos la conexi��n a la base de datos.
 			Class.forName(SQL_DRV);
 			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement(	"insert into PUBLIC.AMIGOS (EMAIL_USUARIO, EMAIL_AMIGO, ACEPTADA) " +	"values ( ?, ?, ?)");
+			ps = con.prepareStatement(	"insert into PUBLIC.AMIGOS (EMAIL_USUARIO, EMAIL_AMIGO, ACEPTADA) " +	"values ( ?, ?, '0')");
 
 			ps.setString(1, nuevoAmigo.getEmail_usuario());
 			ps.setString(2, nuevoAmigo.getEmail_amigo());
-			ps.setBoolean(3, nuevoAmigo.isAceptada());
 			
 
 			rows = ps.executeUpdate();
@@ -253,12 +249,12 @@ public class UsuariosJdbcDao implements UsuariosDao{
 		ejecutaSQL("DELETE FROM AMIGOS");
 		ejecutaSQL("DELETE FROM PUBLICACION");
 		ejecutaSQL("DELETE FROM USUARIOS");
-		ejecutaSQL("INSERT INTO USUARIOS VALUES('admin@dominio.com', 'admin', 'admin', 'admin')");
+		ejecutaSQL("INSERT INTO USUARIOS VALUES('admin@dominio.com', 'admin', 'administrador', 'admin')");
 		
 		JSONParser parser= new JSONParser();
 		try {
 
-			Object obj = parser.parse(new FileReader("/WebContent/redsocial.json"));
+			Object obj = parser.parse(new FileReader("S:\\repos\\tew2Servicios-2021-406-409\\WebContent\\redsocial.json"));
 
 			JSONObject jsonObject = (JSONObject) obj;
 
@@ -271,7 +267,7 @@ public class UsuariosJdbcDao implements UsuariosDao{
 				String password = (String) actualusu.get("passwd");
 				String rol = (String) actualusu.get("rol");
 				String nombre = (String) actualusu.get("nombre");
-				ejecutaSQL("INSERT INTO VALUES('" + email + "','" + password + "','" + rol + "','" + nombre +"')");
+				ejecutaSQL("INSERT INTO USUARIOS VALUES('" + email + "','" + password + "','" + rol + "','" + nombre +"')");
 			}
 
 			//recorrer publicaciones
@@ -283,7 +279,7 @@ public class UsuariosJdbcDao implements UsuariosDao{
 				String titulo = (String) actualpubli.get("titulo");
 				String texto = (String) actualpubli.get("texto");
 				Long fecha = Long.parseLong((String)actualpubli.get("fecha"));
-				ejecutaSQL("INSERT INTO VALUES('" + email + "','" + titulo + "','" + texto + "'," + fecha +")");
+				ejecutaSQL("INSERT INTO PUBLICACION VALUES(DEFAULT, '" + email + "','" + titulo + "','" + texto + "','" + fecha +"')");
 			}
 
 			//recorrer amigos
@@ -293,8 +289,8 @@ public class UsuariosJdbcDao implements UsuariosDao{
 				JSONObject actualami = (JSONObject) iamis.next();
 				String email_usuario = (String)  actualami.get("emailusuario");
 				String email_amigo = (String) actualami.get("emailamigo");
-				ejecutaSQL("INSERT INTO VALUES('" + email_usuario + "','" + email_amigo + "', '1')");
-				ejecutaSQL("INSERT INTO VALUES('" + email_amigo + "','" + email_usuario + "', '1')");
+				ejecutaSQL("INSERT INTO AMIGOS VALUES('" + email_usuario + "','" + email_amigo + "', '1')");
+				ejecutaSQL("INSERT INTO AMIGOS VALUES('" + email_amigo + "','" + email_usuario + "', '1')");
 			}
 		}catch(Exception e) {
 			System.err.println("Error: " + e.toString());

@@ -11,7 +11,7 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://localhost:8080/tew2Servicios-2021-406-409/rest-jsapi"></script>
 <script type="text/javascript" src="javascript/functions_login.js"></script>
-<script type="text/javascript" src="javascript/functions_crudalumno.js"></script>
+<script type="text/javascript" src="javascript/functions_admin.js"></script>
 
 </head>
 <body style="background-color: #E3CAA1">
@@ -38,7 +38,7 @@
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#">Opciones<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="#matricularAsignaturas" target="formulario">Reiniciar BBDD</a></li>
+								<li><a href="javascript: f()" id="btnRes" >Reiniciar BBDD</a></li>
 								<li><a href="borrarUsuarios.html" target="formulario">Eliminar Usuarios</a></li>
 							</ul></li>
 					</ul>
@@ -49,6 +49,14 @@
 			</nav>
 
 		</div>
+		
+		<script>
+		function f(){
+			UsuariosServicesRs.reinicioBaseDatos();
+			window.localStorage.removeItem('usuario');
+			window.location.href = "indexLogin.html";
+		}
+		</script>
 
 
 		<div class="row">
