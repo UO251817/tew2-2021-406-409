@@ -203,6 +203,8 @@ public class UsuariosJdbcDao implements UsuariosDao{
 	public void delete(String email) throws NotPersistedException {
 
 		PreparedStatement ps = null;
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
 		Connection con = null;
 		int rows = 0;
 
@@ -213,11 +215,19 @@ public class UsuariosJdbcDao implements UsuariosDao{
 
 			Class.forName(SQL_DRV);
 			con = DriverManager.getConnection(SQL_URL, "sa", "");
+			ps2 = con.prepareStatement("delete from amigos where EMAIL_USUARIO = ? or EMAIL_AMIGO=?");
+			ps1 = con.prepareStatement("delete from publicacion where EMAIL = ?");
 			ps = con.prepareStatement("delete from usuarios where EMAIL = ?");
 
+			ps2.setString(1, email);
+			ps2.setString(2, email);
+			ps1.setString(1, email);
 			ps.setString(1, email);
 
 			rows = ps.executeUpdate();
+			rows = ps1.executeUpdate();
+			rows = ps2.executeUpdate();
+			
 			if (rows != 1) {
 				throw new NotPersistedException("Usuario " + email + " not found");
 			} 

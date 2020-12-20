@@ -359,8 +359,12 @@ public class AmigosJdbcDao implements AmigosDao {
 			Class.forName(SQL_DRV);
 
 			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("///////////////////////////////////////////");
+			ps = con.prepareStatement("select * from usuarios where email not in (select email_amigo from amigos where email_usuario = ?) "
+                    + " and email <> ? and (email like ? or nombre like ?)");
 			ps.setString(1, email_usuario);
+			ps.setString(2, email_usuario);
+			ps.setString(3, email_usuario);
+			ps.setString(4, email_usuario);
 
 			rs = ps.executeQuery();
 

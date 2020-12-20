@@ -20,25 +20,25 @@ import com.tew.model.Publicacion;
 
 @Path("/PublicacionServicesRs")
 public interface PublicacionServicesRs extends PublicacionService {
-	
+	/*
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Publicacion> getPublicaciones();
+	*/
+	@GET
+	@Path("misPublis/{email}")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	List<Publicacion> getPublicaciones(@PathParam("email") String email) throws EntityNotFoundException;
 	
 	@GET
-	@Path("{email}")
+	@Path("amigosPublis/{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<Publicacion> getPublicaciones(@PathParam("email") String email) throws EntityNotFoundException;
-	
-	@GET
-	@Path("{email}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<Publicacion> getPublicacionesAmigos(@PathParam("email") String email);
-	
+	List<Publicacion> getPublicacionesAmigos(@PathParam("email") String email);
+	/*
 	@GET
 	@Path("{ID}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	Publicacion findById(@PathParam("id") Long id) throws EntityNotFoundException;
+	Publicacion findById(@PathParam("ID") Long id) throws EntityNotFoundException;
 
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -51,4 +51,5 @@ public interface PublicacionServicesRs extends PublicacionService {
 	@DELETE
 	@Path("{email}")
 	void delete(@PathParam("email") String email) throws EntityNotFoundException;
+	*/
 }

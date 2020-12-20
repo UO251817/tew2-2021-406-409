@@ -42,7 +42,7 @@ public class AmigosOperaciones {
 	}
 	
 	
-	public List<Amigos> getCandiatos(String email_usuario) {
+	public List<Amigos> getCandidatos(String email_usuario) {
 
 		AmigosDao amigos = Factories.persistence.createAmigosDao();
 		return amigos.getCandidatos(email_usuario);

@@ -12,28 +12,29 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.tew.business.AmigosService;
 import com.tew.business.exception.EntityAlreadyExistsException;
 import com.tew.business.exception.EntityNotFoundException;
 import com.tew.model.Amigos;
 
 
 @Path("/AmigosServicesRs")
-public interface AmigosServicesRs {
-
+public interface AmigosServicesRs extends AmigosService {
+/*
 	@GET
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Amigos> getAmigos();
-	
+	*/
 	@GET
-	@Path("{email}")
+	@Path("solicitudes/{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Amigos> getAmigos(@PathParam("email") String email) throws Exception;
 	
 	@GET
-	@Path("{email}")
+	@Path("listaposi/{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Amigos> getCandidatos(@PathParam("email") String email) throws Exception;
-	
+	/*
 	@GET
 	@Path("{email_usuario}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -54,5 +55,5 @@ public interface AmigosServicesRs {
 	@POST
 	@Path("{email_usuario}")
 	void aceptar(@PathParam("email_usuario") String email_usuario, String email_amigo) throws EntityNotFoundException;
-
+*/
 }

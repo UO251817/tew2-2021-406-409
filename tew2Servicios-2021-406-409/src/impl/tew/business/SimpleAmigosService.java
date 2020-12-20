@@ -27,7 +27,7 @@ public class SimpleAmigosService implements AmigosService{
 	@Override
 	public List<Amigos> getCandidatos(String email_usuario) throws Exception {
 	
-		return new AmigosOperaciones().getCandiatos(email_usuario);
+		return new AmigosOperaciones().getCandidatos(email_usuario);
 	}
 	
 	@Override

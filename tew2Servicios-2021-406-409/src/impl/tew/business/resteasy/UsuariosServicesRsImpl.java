@@ -24,16 +24,6 @@ public class UsuariosServicesRsImpl implements UsuariosServicesRs {
 	}
 
 	@Override
-	public List<Usuarios> getUsuarios(String filter, String email) throws EntityNotFoundException {
-		try {
-			return new UsuariosOperaciones().getUsuarios(filter,email);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public void delete(String email) throws EntityNotFoundException {
 		new UsuariosOperaciones().delete(email);
 	}
@@ -46,17 +36,6 @@ public class UsuariosServicesRsImpl implements UsuariosServicesRs {
 	@Override
 	public void update(Usuarios usu) throws EntityNotFoundException {
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public Usuarios findByEmail(String email) throws EntityNotFoundException {
-		
-		try {
-			return new UsuariosOperaciones().findByEmail(email);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	@Override
@@ -76,9 +55,29 @@ public class UsuariosServicesRsImpl implements UsuariosServicesRs {
 	}
 
 	@Override
+	public List<Usuarios> getUsuarios(String filtro, String email){
+		try {
+			return new UsuariosOperaciones().getUsuarios(filtro,email);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public Usuarios findByEmail(String email) throws EntityNotFoundException {
+		// TODO Auto-generated method stub
+		try {
+			return new UsuariosOperaciones().findByEmail(email);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
 	public Usuarios usuariosFindByEmail(String email) throws EntityNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

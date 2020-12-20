@@ -1,45 +1,34 @@
-<!-- 
-***************************************************
-Asignatura: Tecnologías Web
-Titulación: GIITIN
-Autor     : Cabal
-Universidad de Oviedo
-***************************************************
--->
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Tecnologias Web. Login</title>
+<title>RedSocial</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
-<script
-	src="jquery/Jquery-1.11.3.min.js"></script>
-<script
-	src="bootstrap/js/bootstrap.min.js"></script>
-	
+<script	src="jquery/Jquery-1.11.3.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
-<title>Login</title>
+<script type="text/javascript"src="http://localhost:8080/tew2Servicios-2021-406-409/rest-jsapi"></script>
+<script type="text/javascript" src="javascript/functions_login.js"></script>
+
 </head>
 
-<body style="background-color: lightgrey">
-	<div class="container">
 
+<body style="background-color: Ligthgrey">
+
+	<div class="container">
 		<!-- 
 	***************************************************
-	* SECTION con dos partes:                         *
-	* - header  (Titulo de cabecera)                  *
-	* - y article con formulario                      *
+	* CABECERA DE LA PAGINA ***************************
 	***************************************************
 	-->
-		<section>
+	
+			<section>
 
 			<header class="page-header">
 				<h1>Login</h1>
-				<time datetime="2016-09-20" pubdate> Septiembre 20th, 2016 </time>
 			</header>
 			<article>
 				<h3>Suministrar las credenciales para autenticarse:</h3>
@@ -55,12 +44,13 @@ Universidad de Oviedo
 							class="form-control" id="passwd" size="25" required />
 					</div>
 
-					<button type="submit" class="btn btn-default">Enviar</button>
-					<button type="reset" class="btn btn-default">Reiniciar</button>
+					<button type="submit" class="btn btn-default" id="btnEnviar">Enviar</button>
+					<div><br>
+					</div>
+					
 				</form>
 			</article>
 		</section>
-
-	</div>
+		</div>		
 </body>
 </html>

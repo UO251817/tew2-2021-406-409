@@ -86,5 +86,4 @@ public class PublicacionServicesRsImpl implements PublicacionServicesRs{
 			e.printStackTrace();
 		}
 	}
-
 }

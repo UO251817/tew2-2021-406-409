@@ -2,24 +2,21 @@
  * 
  */
 function Model() {
-	//Lista de agentes.
-	this.LAgentes= null;
+	//Lista de usus.
+	this.ListaUsuarios= null;
 
 
-	//Carga los datos del servicio sobreescribiendo el dato this.LAgentes.
+	//Carga los datos del servicio sobreescribiendo el dato this.lUsuarios.
 	this.load = function() {
-		this.LAgentes = AgentesServicesRs.getAgentes();
+		this.ListaUsuarios = UsuariosServicesRs.getUsuarios();
 	}
-
 	this.comprueba = function (user, pass) {
-		for(var a in this.LAgentes){
-			var agente = this.LAgentes[a];
-			if((agente.login == user) && (agente.passwd == pass)){
-				localStorage.setItem('agente', agente.id);
-
-				return true;
+		for(var a in this.ListaUsuarios){
+			var usu = this.ListaUsuarios[a];
+			if((usu.email == user) && (usu.passwd == pass)){
+				window.localStorage.setItem('usuario', usu.email);
+				return usu.rol;
 			}
-
 		}
 	}
 };
@@ -29,30 +26,38 @@ function Controller(varmodel) {
 	var that = this;
 	this.model = varmodel;
 	this.init = function() {
-		// Cargamos la lista de agentes del servicio
+		// Cargamos la lista de usus del servicio
 
 		this.model.load();
-		$("#btnEnviar").click(
-				function(event){
+		$("#btnEnviar").click(function(event){
+			
 					var user=$("#username").val();
 					var pass=$("#passwd").val();
-					var bool = that.model.comprueba(user,pass);
-					if (bool == true){
+					var esRol = that.model.comprueba(user,pass);
+					if (esRol == "administrador"){
 
-						window.location.href="indexAgente.html";
+						parent.document.location.href = "indexAdmin.html";
+						alert("H");
+						
+					} 
+					else if(esRol == "usuario"){
 
+						parent.document.location.href = "indexUsu.html";
+						alert("HOLA");
+						
 					}
-					else alert("Login incorrecto");
-
+					else{
+						alert("Login incorrecto");
+					}
 				});
 
-		$("#logout").click(
-				function(event){
-					localStorage.removeItem('agente');
+		$("#fuera").click(function(event){
+			alert("EStamos saliendo");
+					window.localStorage.removeItem('usuario');
+			alert("Devolovemos");
 					window.location.href="index.html";
 				})
 	}
-
 };	
 $(function() {
 	// Creamos el modelo con los datos y la conexión al servicio web.

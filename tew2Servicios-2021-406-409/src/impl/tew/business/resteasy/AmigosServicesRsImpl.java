@@ -38,7 +38,7 @@ public class AmigosServicesRsImpl implements AmigosServicesRs {
 	@Override
 	public List<Amigos> getCandidatos(String email) throws Exception {
 	
-		return new AmigosOperaciones().getCandiatos(email);
+		return new AmigosOperaciones().getCandidatos(email);
 	}
 
 	@Override
@@ -77,6 +77,12 @@ public class AmigosServicesRsImpl implements AmigosServicesRs {
 	public void aceptar(String email_usuario, String email_amigo) throws EntityNotFoundException {
 		
 		new AmigosOperaciones().aceptar(email_usuario, email_amigo);
+		
+	}
+
+	@Override
+	public void delete(String email_usuario, String email_amigo) throws EntityNotFoundException {
+		// TODO Auto-generated method stub
 		
 	}
 
