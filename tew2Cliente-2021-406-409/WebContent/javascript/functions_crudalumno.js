@@ -19,6 +19,7 @@ function Model() {
 	this.tbPublicacionesAmigos = null;
 	this.tbSolicitudes = null;
 	this.tbCandidatos = null;
+	this.tbcandidatosFiltro = null;
 	this.tbUsuarios = null;
 	
 	//Carga los datos del servicio
@@ -27,8 +28,9 @@ function Model() {
 		this.tbPublicacionesMis = PublicacionServicesRs.getPublicaciones({type: 'misPublis', email : localStorage.getItem('usuario')});
 		this.tbPublicacionesAmigos = PublicacionServicesRs.getPublicacionesAmigos({type: 'amigosPublis', email: localStorage.getItem('usuario')});
 		this.tbSolcitudes = AmigosServicesRs.getAmigos({type: 'solicitudes', email: localStorage.getItem('usuario')});
-		this.tbCandidatos = UsuariosServicesRs.getUsuarios2({filtro: "''",email: localStorage.getItem('usuario')});
+		this.tbCandidatos = UsuariosServicesRs.getUsuarios2({filtro: "''" ,email: localStorage.getItem('usuario')});
 		this.tbUsuarios = UsuariosServicesRs.getUsuarios();
+		
 		
 	}
 	
@@ -43,6 +45,11 @@ function Model() {
 		// Recargamos la lista de Publis.
 		this.load();
 	}
+	
+	//Filtramos los amigos
+	this.filtrar = function(fil){
+		this.tbCandidatosFiltro=UsuariosServicesRs.getUsuarios2({filtro: "'"+fil+"'" ,email: localStorage.getItem('usuario')});
+	}
 };
  
 
@@ -51,7 +58,7 @@ function Model() {
 function View(){
 	var usu = localStorage.getItem('usuario');
 	
-	//PUBLICAICONES	
+	//////PUBLICAICONES////////////	
 	//Lista de mis publis 
 	this.listMisPublis = function (lista){
 		$("#tablaMisPubli").html("");
@@ -99,7 +106,7 @@ function View(){
 		return publi;		
 	}
 	
-	//AMIGOS
+	//////////AMIGOS//////////////////////////
 	
 	this.verSolicitudes = function (lista){
 
@@ -113,7 +120,8 @@ function View(){
 			for (var i in lista) {
 				var amigo = lista[i];
 				$("#tablaSolAmi tbody").append("<tr> <td>"
-						+ amigo.email_usuario +"</td></tr>");		
+						+ amigo.email_usuario  
+						+ "<td> <button type='submit' class='btn btn-default AñadirAmigo' id='AñadirAmigo'>Aceptar</button></td>" +"</td></tr>");		
 			}
 		}
 	}
@@ -129,14 +137,20 @@ function View(){
 			if(amigo.rol == "usuario"){
 			$("#tablaAddAmi tbody").append("<tr> <td>"
                     + amigo.email + "</td>" 
-                    + "<td>" + amigo.nombre +"</td></tr>");		
+                    + "<td>" + amigo.nombre 
+                    + "<td> <button type='submit' class='btn btn-default AñadirAmigo' id='AñadirAmigo'>Enviar peticion</button></td>" + "</tr>");		
 			}
 		}
 	}
 	
-	//USUARIOS
+	this.filtAmi = function(){
+		var filtro = $('#filtro').val();
+		return filtro;		
+	}
+	
+	/////////////USUARIOS////////
+	
 	this.todosUsuarios = function (lista){
-		//$("#tablaTodosUsuarios").html("");
 		$("#tablaTodosUsuarios").html(
 				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Borrar</th>"
 				+"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
@@ -175,22 +189,35 @@ function Controller(varmodel, varview) {
 		this.view.verSolicitudes(this.model.tbSolcitudes);
 		this.view.añadirAmigos(this.model.tbCandidatos);
 		this.view.todosUsuarios(this.model.tbUsuarios);
-		
+
 
 		$("#publisnuevas").bind("submit",
 				// Método que gestiona el evento de clickar el botón submit del
 				// formulario
-			function(event) {
-				var publicacion = that.view.cargaPubli();
-				that.model.add(publicacion);
-				//Listamos publis
-				that.view.listMisPublis(that.model.tbPublicacionesMis);
-				window.location.href = "misPublis.html";		
-				});
-		}
-	}; 
-	
-	
+				function(event) {
+			var publicacion = that.view.cargaPubli();
+			that.model.add(publicacion);
+			//Listamos publis
+			that.view.listMisPublis(that.model.tbPublicacionesMis);
+			window.location.href = "misPublis.html";		
+		});
+
+
+
+		$("#btnBuscar").click( function(event) {
+			var filtro = that.view.filtAmi();
+			if(filtro ===""){
+				that.view.añadirAmigos(that.model.tbCandidatos);
+			}else{
+				that.model.filtrar(filtro);
+				that.view.añadirAmigos(that.model.tbCandidatosFiltro);
+			}
+		});
+	}
+
+}; 
+
+
 $(function() {
 	// Creamos el modelo con los datos y la conexión al servicio web.
 	var model = new Model();
