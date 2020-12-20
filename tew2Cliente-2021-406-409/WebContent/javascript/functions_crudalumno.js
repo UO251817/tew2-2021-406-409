@@ -27,15 +27,16 @@ function Model() {
 		this.tbPublicacionesMis = PublicacionServicesRs.getPublicaciones({type: 'misPublis', email : localStorage.getItem('usuario')});
 		this.tbPublicacionesAmigos = PublicacionServicesRs.getPublicacionesAmigos({type: 'amigosPublis', email: localStorage.getItem('usuario')});
 		this.tbSolcitudes = AmigosServicesRs.getAmigos({type: 'solicitudes', email: localStorage.getItem('usuario')});
-		this.tbCandidatos = UsuariosServicesRs.getUsuarios("",{type: 'candidatos', email: localStorage.getItem('usuario')});
+		this.tbCandidatos = UsuariosServicesRs.getUsuarios2({filtro: "''",email: localStorage.getItem('usuario')});
 		this.tbUsuarios = UsuariosServicesRs.getUsuarios();
+		
 	}
 	
 	
-	//Llamamos al servicio de alta de Piso
+	//Añadir nueva Publicacion
 	this.add = function(publicacion) {
-		// Llamamos al servicio de alta de piso
-		PublicacionesServicesRs.save({
+		// Llamamos al servicio de alta de publi
+		PublicacionServicesRs.save({
 			$entity : publicacion,
 			$contentType : "application/json"
 		}); 
@@ -85,33 +86,51 @@ function View(){
 		}
 	}
 	
+	//Crear nueva publi
+	this.cargaPubli = function(){
+		var date = new Date();
+		var tim = date.getTime();
+		var publi= {
+				email: localStorage.getItem('usuario'),
+				titulo: $('#titulo').val(),
+				texto: $('#texto').val(),
+				fecha: tim
+		};
+		return publi;		
+	}
+	
 	//AMIGOS
 	
 	this.verSolicitudes = function (lista){
-		$("#tablaSolAmi").html("");
-		$("#tablaSolAmi").html(
-				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Aceptar</th>" +"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
-		
-		for (var i in lista) {
-			var amigo = lista[i];
-			$("#tablaSolAmi tbody").append("<tr> <td>"
-                    + amigo.email_usuario +"</td></tr>");		
+
+		if(lista.length==0){
+			$("#tablaSolAmi").html("No hay peticiones pendientes");
+		}
+		else{
+			$("#tablaSolAmi").html("");
+			$("#tablaSolAmi").html(
+					"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Aceptar</th>" +"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
+			for (var i in lista) {
+				var amigo = lista[i];
+				$("#tablaSolAmi tbody").append("<tr> <td>"
+						+ amigo.email_usuario +"</td></tr>");		
+			}
 		}
 	}
-	
-	
-	
+
 	this.añadirAmigos = function (lista){
 		$("#tablaAddAmi").html("");
 		$("#tablaAddAmi").html(
-				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Añadir</th>" +"<th>Nombre</th>"
+				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Nombre</th>" +"<th>Añadir</th>"
 				+"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
 		
 		for (var i in lista) {
-			var publica = lista[i];
+			var amigo = lista[i];
+			if(amigo.rol == "usuario"){
 			$("#tablaAddAmi tbody").append("<tr> <td>"
                     + amigo.email + "</td>" 
                     + "<td>" + amigo.nombre +"</td></tr>");		
+			}
 		}
 	}
 	
@@ -157,20 +176,18 @@ function Controller(varmodel, varview) {
 		this.view.añadirAmigos(this.model.tbCandidatos);
 		this.view.todosUsuarios(this.model.tbUsuarios);
 		
-		
-		
-		$("#nuevaPubli").bind("submit",
+
+		$("#publisnuevas").bind("submit",
 				// Método que gestiona el evento de clickar el botón submit del
 				// formulario
 			function(event) {
-				var date = new Date();
-				var publicacion = {
-						email : window.localStorage.getItem('usuario'),
-						titulo: $('#titulo').val(),
-						texto: $('#texto').val(),
-						fecha: date,
-				}});
-		};
+				var publicacion = that.view.cargaPubli();
+				that.model.add(publicacion);
+				//Listamos publis
+				that.view.listMisPublis(that.model.tbPublicacionesMis);
+				window.location.href = "misPublis.html";		
+				});
+		}
 	}; 
 	
 	

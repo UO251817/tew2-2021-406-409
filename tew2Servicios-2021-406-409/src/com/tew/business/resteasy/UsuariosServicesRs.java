@@ -18,9 +18,9 @@ public interface UsuariosServicesRs extends UsuariosService {
 	public List<Usuarios> getUsuarios();
 	
 	@GET
-	@Path("candidatos/{email}")
+	@Path("{filtro}/{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	List<Usuarios> getUsuarios(String filtro, @PathParam("email") String email);
+	List<Usuarios> getUsuarios2(@PathParam("filtro") String filtro, @PathParam("email") String email);
 	
 	@GET
 	@Path("buscaFiltro/{email}")

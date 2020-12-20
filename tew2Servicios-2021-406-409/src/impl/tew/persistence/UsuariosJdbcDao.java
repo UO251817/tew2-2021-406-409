@@ -68,7 +68,8 @@ public class UsuariosJdbcDao implements UsuariosDao{
 	
 	@Override
 	public List<Usuarios> getUsuarios(String filtro, String email) {
-		
+		System.out.println(filtro);
+		System.out.println(email);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Connection con = null;

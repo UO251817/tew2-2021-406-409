@@ -43,11 +43,11 @@ public interface PublicacionServicesRs extends PublicacionService {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	void update(Publicacion p) throws EntityNotFoundException;
-	
+	*/
 	@PUT
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	void save( Publicacion p) throws EntityAlreadyExistsException;
-	
+	/*
 	@DELETE
 	@Path("{email}")
 	void delete(@PathParam("email") String email) throws EntityNotFoundException;

@@ -70,7 +70,6 @@ public class PublicacionJdbcDao implements PublicacionDao{
 
 	@Override
 	public void save(Publicacion p) throws AlreadyPersistedException {
-
 		PreparedStatement ps = null;
 		Connection con = null;
 		int rows = 0;

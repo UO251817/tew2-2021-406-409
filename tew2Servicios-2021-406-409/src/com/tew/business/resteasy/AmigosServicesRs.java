@@ -29,12 +29,12 @@ public interface AmigosServicesRs extends AmigosService {
 	@Path("solicitudes/{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Amigos> getAmigos(@PathParam("email") String email) throws Exception;
-	
+	/*
 	@GET
 	@Path("listaposi/{email}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Amigos> getCandidatos(@PathParam("email") String email) throws Exception;
-	/*
+	
 	@GET
 	@Path("{email_usuario}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

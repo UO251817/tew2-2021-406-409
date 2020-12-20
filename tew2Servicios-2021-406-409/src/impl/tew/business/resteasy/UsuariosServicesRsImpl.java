@@ -55,9 +55,10 @@ public class UsuariosServicesRsImpl implements UsuariosServicesRs {
 	}
 
 	@Override
-	public List<Usuarios> getUsuarios(String filtro, String email){
+	public List<Usuarios> getUsuarios2(String filtro, String email){
+		String filt = filtro.substring(1,filtro.length()-1);
 		try {
-			return new UsuariosOperaciones().getUsuarios(filtro,email);
+			return new UsuariosOperaciones().getUsuarios(filt,email);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -77,6 +78,12 @@ public class UsuariosServicesRsImpl implements UsuariosServicesRs {
 
 	@Override
 	public Usuarios usuariosFindByEmail(String email) throws EntityNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Usuarios> getUsuarios(String filtro, String email) throws EntityNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
