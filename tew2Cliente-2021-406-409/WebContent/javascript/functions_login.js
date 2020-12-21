@@ -29,6 +29,7 @@ function Controller(varmodel) {
 		// Cargamos la lista de usus del servicio
 
 		this.model.load();
+		
 		$("#btnEnviar").click(function(event){
 			
 					var user=$("#username").val();
@@ -37,13 +38,13 @@ function Controller(varmodel) {
 					if (esRol == "administrador"){
 
 						parent.document.location.href = "indexAdmin.html";
-						alert("H");
+						alert(".");
 						
 					} 
 					else if(esRol == "usuario"){
 
 						parent.document.location.href = "indexUsu.html";
-						alert("HOLA");
+						alert(".");
 						
 					}
 					else{
@@ -52,9 +53,7 @@ function Controller(varmodel) {
 				});
 
 		$("#fuera").click(function(event){
-			alert("EStamos saliendo");
 					window.localStorage.removeItem('usuario');
-			alert("Devolovemos");
 					window.location.href="index.html";
 				})
 	}

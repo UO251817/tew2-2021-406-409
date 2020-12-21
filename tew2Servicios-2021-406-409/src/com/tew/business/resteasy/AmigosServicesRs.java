@@ -51,6 +51,6 @@ public interface AmigosServicesRs extends AmigosService {
 	void delete(@PathParam("email_amigo") String email_amigo) throws EntityNotFoundException;
 	*/
 	@POST
-	@Path("{email_usuario}")
-	void aceptar(@PathParam("email_usuario") String email_usuario, String email_amigo) throws EntityNotFoundException;
+	@Path("{email_usuario}/{email_amigo}")
+	void aceptar(@PathParam("email_usuario") String email_usuario, @PathParam("email_amigo") String email_amigo) throws EntityNotFoundException;
 }

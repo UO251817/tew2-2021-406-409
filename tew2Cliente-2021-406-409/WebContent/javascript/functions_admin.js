@@ -2,6 +2,9 @@
  * 
  */
 function Model() {
+	
+	var user = localStorage.getItem('usuario');
+	
 	//Lista de usus.
 	this.ListaUsuarios= null;
 
@@ -9,15 +12,31 @@ function Model() {
 	//Carga los datos del servicio sobreescribiendo el dato this.lUsuarios.
 	this.load = function() {
 		this.ListaUsuarios = UsuariosServicesRs.getUsuarios();
-	}
-	this.comprueba = function (user, pass) {
 		for(var a in this.ListaUsuarios){
 			var usu = this.ListaUsuarios[a];
-			if((usu.email == user) && (usu.passwd == pass)){
-				window.localStorage.setItem('usuario', usu.email);
-				return usu.rol;
+			if(usu.rol == 'administrador'){
+				this.ListaUsuarios.splice(usu,1);
 			}
 		}
+	}
+	
+	
+
+	// Eliminación un usuario existente
+	this.remove = function(i) {
+		var email = this.ListaUsuarios[i].email;
+		// Llamamos al servicio de borrado de usuario
+		UsuariosServicesRs.delete({email : email});
+	}
+	
+	
+
+	this.find = function(email) {
+		function search(u) {
+			return u.email == email;
+		}
+		var usu = this.ListaUsuarios.findByEmail(search);
+		return usu;
 	}
 };
 
@@ -30,15 +49,21 @@ function View(){
 	
 	this.todosUsuarios = function (lista){
 		$("#tablaTodosUsuarios").html(
-				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Borrar</th>"
+				"<thead>" 
+				+ "<tr>" 
+				+ "<th>Email</th>" 
+				+ "<th>Borrar</th>"
 				+"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
 
+		
 		for (var i in lista) {
 			var usu = lista[i];
 			if(usu.rol == "usuario"){
 				$("#tablaTodosUsuarios tbody").append("<tr> <td>"
 						+ usu.email 
-						+ "<td> <button type='submit' class='btn btn-default borrarUsuario' id='borrarUsuario'>Borrar</button></td>" 
+						+ "<td><input class='form-check-input position-static selec1' type='checkbox' id='"
+                            + i
+                            + "'></td><td>"
 						+"</td></tr>");
 			}		
 		}
@@ -46,34 +71,55 @@ function View(){
 	
 }
 
-function Controller(varmodel) {
+function Controller(varmodel, varview) {
 	var that = this;
 	this.model = varmodel;
+	this.view = varview;
+	
 	this.init = function() {
 		
+		this.model.load();
+		this.view.todosUsuarios(that.model.ListaUsuarios);
+
 		$("#btnBorrar").click(
-				
+
 				function(event){
-					
-					var array = []
-					var check = document.querySelectorAll('#tablaTodosUsuarios [type=checkbox]:checked');
-					var i=0;
-					
-					for(i=0; i<check.length;i++){
-						var c = check[i];
-						that.model.eliminar(c.id);						
+					var seleccionado = document
+					.querySelectorAll('#tablaTodosUsuarios [type=checkbox]:checked');
+
+					for ( var i in seleccionado) {
+						var usu = seleccionado[i];
+						if (typeof usu.id === 'undefined') {
+						} else {
+							that.model.remove(usu.id);
+						}
 					}
 					that.model.load();
-					that.view.todosUsuarios(that.model.tbUsuarios);
+					that.view.todosUsuarios(that.model.ListaUsuarios);
+					location.reload(true);
+
 				});	
 	}
+
+
+	// Manejador del checkbox de selección de usuarios
+	$(".selec").change(
+			// Método que gestiona el evento de clickar en el evento
+			function(event) {
+				if (document.getElementById("selec").checked === true) {
+					$(".selec1").prop("checked", true);
+				} else if (document.getElementById("selec").checked === false) {
+            $(".selec1").prop("checked", false);
+        }
+    });
 };	
 
 $(function() {
 	// Creamos el modelo con los datos y la conexión al servicio web.
 	var model = new Model();
+	var view = new View();
 	// Creamos el controlador
-	var control = new Controller(model);
+	var control = new Controller(model,view);
 	// Iniciamos la aplicación
 	control.init();
 });

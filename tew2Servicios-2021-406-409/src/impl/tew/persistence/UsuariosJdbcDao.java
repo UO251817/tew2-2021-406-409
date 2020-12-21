@@ -82,11 +82,14 @@ public class UsuariosJdbcDao implements UsuariosDao{
 			Class.forName(SQL_DRV);
 
 			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("select * from usuarios where email not in (select email_amigo from amigos where email_usuario = ? ) and email <> ? and (email like ? or nombre like ?)");
+			ps = con.prepareStatement("select * from usuarios where email not in ((select email_usuario from amigos where email_amigo = ? )"
+			+"union(select email_amigo from amigos where email_usuario = ? )) "
+					+"and email <> ? and (email like ? or nombre like ?)");
 			ps.setString(1, email);
 			ps.setString(2, email);
-			ps.setString(3, "%"+filtro+"%");
+			ps.setString(3, email);
 			ps.setString(4, "%"+filtro+"%");
+			ps.setString(5, "%"+filtro+"%");
 			
 			rs = ps.executeQuery();
 
@@ -221,9 +224,9 @@ public class UsuariosJdbcDao implements UsuariosDao{
 			ps1.setString(1, email);
 			ps.setString(1, email);
 
-			rows = ps.executeUpdate();
-			rows = ps1.executeUpdate();
 			rows = ps2.executeUpdate();
+			rows = ps1.executeUpdate();
+			rows = ps.executeUpdate();
 			
 			if (rows != 1) {
 				throw new NotPersistedException("Usuario " + email + " not found");

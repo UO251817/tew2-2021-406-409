@@ -19,7 +19,7 @@ function Model() {
 	this.tbPublicacionesAmigos = null;
 	this.tbSolicitudes = null;
 	this.tbCandidatos = null;
-	this.tbcandidatosFiltro = null;
+	//this.tbcandidatosFiltro = null;
 	this.tbUsuarios = null;
 	
 	//Carga los datos del servicio
@@ -48,7 +48,8 @@ function Model() {
 	
 	//Filtramos los amigos
 	this.filtrar = function(fil){
-		this.tbCandidatosFiltro=UsuariosServicesRs.getUsuarios2({filtro: "'"+fil+"'" ,email: localStorage.getItem('usuario')});
+		var f = UsuariosServicesRs.getUsuarios2({filtro: "'"+fil+"'" ,email: localStorage.getItem('usuario')});
+		return f;
 	}
 	
 	//Guardamos la peticion
@@ -57,6 +58,13 @@ function Model() {
 			$entity: solicitud,
 			$contentType: "application/json"
 		});
+		this.load();
+	}
+	
+	//Aceptar peti
+	this.aceptarPeti = function(email_amigo){
+		AmigosServicesRs.aceptar({email_usuario: email_amigo, email_amigo: localStorage.getItem('usuario')});
+		this.load();
 	}
 };
  
@@ -168,6 +176,12 @@ function View(){
 		return d;	
 		
 	}
+	
+	this.aceptarPetis = function(fila){
+		var d = fila.closest('tr').find('td').get(0).innerHTML;
+		return d;	
+		
+	}
 };
 
 
@@ -182,7 +196,6 @@ function Controller(varmodel, varview) {
 	this.model = varmodel;
 	// refefencia a la vista
 	this.view = varview;
-	var entero = 1;
 	// Funcion de inicialización para cargar modelo y vista, definición de manejadores
 	this.init = function() {
 		// Cargamos la lista de publicaciones 
@@ -191,13 +204,7 @@ function Controller(varmodel, varview) {
 		this.view.listMisPublis(this.model.tbPublicacionesMis);
 		this.view.listPublisAmigos(this.model.tbPublicacionesAmigos);
 		this.view.verSolicitudes(this.model.tbSolcitudes);
-		
-		if(entero==1){
-			this.view.añadirAmigos(this.model.tbCandidatos);
-		}
-		else if(entero==2){
-			this.view.añadirAmigos(this.model.tbCandidatosFiltro);	
-		}
+		this.view.añadirAmigos(this.model.tbCandidatos);
 
 
 		$("#publisnuevas").bind("submit",
@@ -215,34 +222,37 @@ function Controller(varmodel, varview) {
 				
 				function(event) {
 			var filtro = that.view.filtAmi();
+			var listFil = that.model.filtrar(filtro);
 			if(filtro ===""){
-				//that.view.añadirAmigos(that.model.tbCandidatos);
-				entero=1;
-				that.init();
+				that.view.añadirAmigos(that.model.tbCandidatos);
 			}else{
-				that.model.filtrar(filtro);
-				//that.view.añadirAmigos(that.model.tbCandidatosFiltro);
-				entero=2;
-				that.init();
+				that.view.añadirAmigos(listFil);
+				
 			}
 		});
 		
 
-		$(".AñadirAmigo").on("click",
+		$("#tablaAddAmi").on("click",".AñadirAmigo",
 				function(event) {
-			alert("Llegamos2");
 			var email_ami = that.view.solAmis($(this));
+			alert("Peticion enviada a " + email_ami);
 			var solicitud = {
 					
 					email_usuario: localStorage.getItem('usuario'),
 					email_amigo: email_ami
 			}
 			that.model.solAmistad(solicitud);
-			this.entero=1;
-			location.reload(true);
+			that.view.añadirAmigos(that.model.tbCandidatos);
 		});
+		
+		
+		$(".AceptarAmigo").on("click",
+				function(event) {
+			var email_ami = that.view.aceptarPetis($(this));
+			that.model.aceptarPeti(email_ami);
+			location.reload(true);
+		});	
 	}
-
 }; 
 
 

@@ -47,14 +47,20 @@
 					</ul>
 				</div>
 			</nav>
-
 		</div>
 		
 		<script>
 		function f(){
-			UsuariosServicesRs.reinicioBaseDatos();
-			window.localStorage.removeItem('usuario');
-			window.location.href = "indexLogin.html";
+			var op = confirm("¿Seguro que desea reinciar la Base de Datos?");
+			if(op==true){
+				UsuariosServicesRs.reinicioBaseDatos();
+				window.localStorage.removeItem('usuario');
+				window.location.href = "indexLogin.html";
+				
+			}
+			else{
+				window.location.href = "indexAdmin.html"
+			}
 		}
 		</script>
 
