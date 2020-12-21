@@ -28,7 +28,6 @@ function View(){
 	var usu = localStorage.getItem('usuario');
 	
 	
-	
 	this.todosUsuarios = function (lista){
 		$("#tablaTodosUsuarios").html(
 				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Borrar</th>"
@@ -38,7 +37,7 @@ function View(){
 			var usu = lista[i];
 			if(usu.rol == "usuario"){
 				$("#tablaTodosUsuarios tbody").append("<tr> <td>"
-						+ usu.email  
+						+ usu.email 
 						+ "<td> <button type='submit' class='btn btn-default borrarUsuario' id='borrarUsuario'>Borrar</button></td>" 
 						+"</td></tr>");
 			}		
@@ -52,8 +51,24 @@ function Controller(varmodel) {
 	this.model = varmodel;
 	this.init = function() {
 		
+		$("#btnBorrar").click(
+				
+				function(event){
+					
+					var array = []
+					var check = document.querySelectorAll('#tablaTodosUsuarios [type=checkbox]:checked');
+					var i=0;
+					
+					for(i=0; i<check.length;i++){
+						var c = check[i];
+						that.model.eliminar(c.id);						
+					}
+					that.model.load();
+					that.view.todosUsuarios(that.model.tbUsuarios);
+				});	
 	}
 };	
+
 $(function() {
 	// Creamos el modelo con los datos y la conexión al servicio web.
 	var model = new Model();

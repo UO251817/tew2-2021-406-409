@@ -135,22 +135,27 @@ function View(){
 	}
 
 	this.añadirAmigos = function (lista){
-		$("#tablaAddAmi").html("");
-		$("#tablaAddAmi").html(
-				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Nombre</th>" +"<th>Añadir</th>"
-				+"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
-		
-		for (var i in lista) {
-			var amigo = lista[i];
-			if(amigo.rol == "usuario"){
-			$("#tablaAddAmi tbody").append("<tr> <td>"
-                    + amigo.email + "</td>" 
-                    + "<td>" + amigo.nombre 
-                    + "<td> <button type='submit' class='btn btn-default AñadirAmigo' id='AñadirAmigo'>Enviar peticion</button></td>" + "</tr>");		
+		if(lista.length==0){
+			$("#tablaAddAmi").html("No hay amigos disponibles");
+		}
+		else{
+			$("#tablaAddAmi").html("");
+			$("#tablaAddAmi").html(
+					"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Nombre</th>" +"<th>Añadir</th>"
+					+"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
+
+			for (var i in lista) {
+				var amigo = lista[i];
+				if(amigo.rol == "usuario"){
+					$("#tablaAddAmi tbody").append("<tr> <td>"
+							+ amigo.email + "</td>" 
+							+ "<td>" + amigo.nombre 
+							+ "<td> <button type='submit' class='btn btn-default AñadirAmigo' id='AñadirAmigo'>Enviar peticion</button></td>" + "</tr>");		
+				}
 			}
 		}
 	}
-	
+
 	this.filtAmi = function(){
 		var filtro = $('#filtro').val();
 		return filtro;		
@@ -158,29 +163,11 @@ function View(){
 	
 	/////////////USUARIOS////////
 	
-	this.todosUsuarios = function (lista){
-		$("#tablaTodosUsuarios").html(
-				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Borrar</th>"
-				+"</tr>" + "</thead>" + "<tbody>" + "</tbody>");
-
-		for (var i in lista) {
-			var usu = lista[i];
-			if(usu.rol == "usuario"){
-				$("#tablaTodosUsuarios tbody").append("<tr> <td>"
-						+ usu.email  
-						+ "<td> <button type='submit' class='btn btn-default borrarUsuario' id='borrarUsuario'>Borrar</button></td>" 
-						+"</td></tr>");
-			}		
-		}
-	}
-	
 	this.solAmis = function(fila){
 		var d = fila.closest('tr').find('td').get(0).innerHTML;
 		return d;	
 		
 	}
-
-
 };
 
 
@@ -195,6 +182,7 @@ function Controller(varmodel, varview) {
 	this.model = varmodel;
 	// refefencia a la vista
 	this.view = varview;
+	var entero = 1;
 	// Funcion de inicialización para cargar modelo y vista, definición de manejadores
 	this.init = function() {
 		// Cargamos la lista de publicaciones 
@@ -203,8 +191,13 @@ function Controller(varmodel, varview) {
 		this.view.listMisPublis(this.model.tbPublicacionesMis);
 		this.view.listPublisAmigos(this.model.tbPublicacionesAmigos);
 		this.view.verSolicitudes(this.model.tbSolcitudes);
-		this.view.añadirAmigos(this.model.tbCandidatos);
-		this.view.todosUsuarios(this.model.tbUsuarios);
+		
+		if(entero==1){
+			this.view.añadirAmigos(this.model.tbCandidatos);
+		}
+		else if(entero==2){
+			this.view.añadirAmigos(this.model.tbCandidatosFiltro);	
+		}
 
 
 		$("#publisnuevas").bind("submit",
@@ -218,20 +211,26 @@ function Controller(varmodel, varview) {
 		});
 
 
-
-		$("#btnBuscar").click( function(event) {
+		$("#filtro").on("keyup",
+				
+				function(event) {
 			var filtro = that.view.filtAmi();
 			if(filtro ===""){
-				that.view.añadirAmigos(that.model.tbCandidatos);
+				//that.view.añadirAmigos(that.model.tbCandidatos);
+				entero=1;
+				that.init();
 			}else{
 				that.model.filtrar(filtro);
-				that.view.añadirAmigos(that.model.tbCandidatosFiltro);
+				//that.view.añadirAmigos(that.model.tbCandidatosFiltro);
+				entero=2;
+				that.init();
 			}
 		});
 		
-		
 
-		$(".AñadirAmigo").click( function(event) {
+		$(".AñadirAmigo").on("click",
+				function(event) {
+			alert("Llegamos2");
 			var email_ami = that.view.solAmis($(this));
 			var solicitud = {
 					
@@ -239,6 +238,7 @@ function Controller(varmodel, varview) {
 					email_amigo: email_ami
 			}
 			that.model.solAmistad(solicitud);
+			this.entero=1;
 			location.reload(true);
 		});
 	}
