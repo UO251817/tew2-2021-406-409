@@ -77,6 +77,9 @@ function View(){
 	//////PUBLICAICONES////////////	
 	//Lista de mis publis 
 	this.listMisPublis = function (lista){
+		if(lista.length==0){
+			$("#tablaMisPubli").html("No tienes publicaciones");
+		}
 		$("#tablaMisPubli").html("");
 		$("#tablaMisPubli").html(
 				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Titulo</th>"+"<th>Texto</th>" + "<th>Fecha</th>"
@@ -94,6 +97,9 @@ function View(){
 	
 	//Lista de publis de amigos
 	this.listPublisAmigos = function (lista){
+		if(lista.length==0){
+			$("#tablaAmigosPubli").html("No hay publicaciones");
+		}
 		$("#tablaAmigosPubli").html("");
 		$("#tablaAmigosPubli").html(
 				"<thead>" + "<tr>" + "<th>Email</th>" + "<th>Titulo</th>"+"<th>Texto</th>" + "<th>Fecha</th>"
@@ -119,6 +125,7 @@ function View(){
 				texto: $('#texto').val(),
 				fecha: tim
 		};
+		location.href = "publisTodas.html";
 		return publi;		
 	}
 	
@@ -215,6 +222,7 @@ function Controller(varmodel, varview) {
 			that.model.add(publicacion);
 			//Listamos publis
 			that.view.listMisPublis(that.model.tbPublicacionesMis);
+			that.view.listPublisAmigos(that.model.tbPublicacionesAmigos);
 		});
 
 

@@ -43,7 +43,7 @@
 							</ul></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a id="logout" href="indexLogin.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						<li><a id="logout" href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -55,7 +55,7 @@
 			if(op==true){
 				UsuariosServicesRs.reinicioBaseDatos();
 				window.localStorage.removeItem('usuario');
-				window.location.href = "indexLogin.html";
+				window.location.href = "index.html";
 				
 			}
 			else{
