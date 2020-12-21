@@ -257,7 +257,7 @@ public class UsuariosJdbcDao implements UsuariosDao{
 		JSONParser parser= new JSONParser();
 		try {
 
-			Object obj = parser.parse(new FileReader("S:\\repos\\tew2Servicios-2021-406-409\\WebContent\\redsocial.json"));
+			Object obj = parser.parse(new FileReader("S:\\data\\redsocial.json"));
 
 			JSONObject jsonObject = (JSONObject) obj;
 
